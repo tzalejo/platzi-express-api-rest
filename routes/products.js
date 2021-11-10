@@ -7,7 +7,6 @@ router.get('/', (req, res)=>{
     const {size} = req.query;
     const products = [];
     const limit = size || 10;
-
     for (let i = 0; i < limit; i++){
         products.push({
             name: faker.commerce.productName(),
@@ -32,5 +31,13 @@ router.get('/:id', (req, res)=>{
     });
 });
 
- module.exports = router;
+router.post('/', (req, res)=>{
+    const body = req.body;
+    res.json({
+        message: 'create',
+        data: body
+    });
+});
+
+module.exports = router;
 
