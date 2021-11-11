@@ -2,26 +2,18 @@ const express = require('express');
 //const faker = require('faker');
 const router = express.Router();
 
+const UsersService = require('./../services/user.service');
+const usersService = new UsersService();
+
 router.get('/', (req, res)=>{
-    const { limit, offset } = req.query;
-    if (limit && offset){
-    
-    res.json(
-        {
-            id: 1,
-            name: 'ale',
-            email: 'tzale@mail.com',
-            limit,
-            offset
-        },
-    );
-    }else{
-    res. send('No hay datos');
-    }
+    const users = usersService.find();    
+    res.json(users);
 });
 
 router.get('/:id',(req, res)=>{
-    res.send('obtener un user');
+    const { id } = req.params;
+    const user = usersService.findOne(id);
+    res.json(user);
 });
 
 

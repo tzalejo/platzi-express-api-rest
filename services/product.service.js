@@ -1,8 +1,5 @@
-
 const faker = require('faker');
 class ProductsService {
-
-
     constructor(){
         this.products = [];
         this.generate();
