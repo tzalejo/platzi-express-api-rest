@@ -19,12 +19,12 @@ class ProductsService {
     }
 
     create(data){
-        return this.products.push({ 
+        const newProduct = {
             id: faker.datatype.uuid(),
-            name: data.name,
-            price: data.price, 
-            image: data.image
-        });
+            ...data
+        };
+        this.products.push(newProduct);
+        return newProduct;
     }
 
     find(){
@@ -32,12 +32,33 @@ class ProductsService {
     }
 
     findOne(id){
-        return this.products.find(item => item.id === id); 
+        return this.products.find(item => item.id === id);
     }
 
-    delete(){}
-    
-    udpate(){}
+    delete(id){
+      const index = this.products.findIndex(item => item.id === id);
+      if (index === -1) {
+        throw new Error('Product not found');
+      }
+
+      this.products.splice(index,1);
+      return {id};
+    }
+
+    udpate(id, data){
+      const index = this.products.findIndex(item => item.id === id);
+
+      if (index === -1) {
+        throw new Error('Product not found');
+      }
+
+      const product = this.products[index];
+      this.products[index] ={
+        ...product,
+        ...data
+      };
+      return this.products[index];
+    }
 
 }
 

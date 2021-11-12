@@ -29,22 +29,23 @@ router.post('/', (req, res)=>{
     });
 });
 
-router.put('/:id', (req, res)=>{
+router.patch('/:id', (req, res)=>{
     const {id} = req.params;
     const body = req.body;
+    const product = productService.udpate(id, body);
     res.json({
         message: 'modificar',
-        data: body,
-        id,
+        data: product
     });
 });
 
 
 router.delete('/:id', (req, res)=>{
     const {id} = req.params;
+    const product = productService.delete(id);
     res.json({
         message: 'eliminar',
-        id,
+        product,
     });
 });
 
