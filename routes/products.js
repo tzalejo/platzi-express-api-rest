@@ -4,45 +4,69 @@ const ProductsService = require('./../services/product.service');
 const router = express.Router();
 const productService = new ProductsService();
 
-
-router.get('/', (req, res)=>{
-    const products = productService.find();
+const validatorHandler = require('./../middleware/validator.handler');
+const { createProductDto, updateProductDto, getProductDto } = require('./../schemas/product.dto');
+router.get('/', async (req, res, next)=>{
+  try {
+    const products = await productService.find();
     res.json(products);
+  } catch (error) {
+    next(error);
+  }
 });
 
-router.get('/filter', (req, res)=>{
-    res.send('estoy en el filter');
-});
-
-router.get('/:id', (req, res)=>{
+router.get('/:id',
+  validatorHandler(getProductDto, 'params'),
+  async (req, res, next)=>{
+  try {
     const { id } =req.params;
-    const product = productService.findOne(id);
+    const product = await productService.findOne(id);
     res.json(product);
+  } catch (error) {
+    next(error);
+  }
 });
 
-router.post('/', (req, res)=>{
+router.post('/',
+  validatorHandler(createProductDto, 'body'),
+  async (req, res)=>{
+  try {
     const body = req.body;
-    const productNew = productService.create(body);
+    const productNew = await productService.create(body);
     res.status(201).json({
         message: 'create',
         data: productNew
     });
+  } catch (error) {
+    res.status(404).json({
+      message: error.message
+    });
+  }
 });
 
-router.patch('/:id', (req, res)=>{
+router.patch('/:id',
+  validatorHandler(getProductDto, 'params'),
+  validatorHandler(updateProductDto, 'body'),
+  async (req, res)=>{
+  try {
     const {id} = req.params;
     const body = req.body;
-    const product = productService.udpate(id, body);
+    const product = await productService.udpate(id, body);
     res.json({
         message: 'modificar',
         data: product
     });
+  } catch (error) {
+    res.status(404).json({
+      message: error.message
+    });
+  }
 });
 
 
-router.delete('/:id', (req, res)=>{
+router.delete('/:id', async (req, res)=>{
     const {id} = req.params;
-    const product = productService.delete(id);
+    const product = await productService.delete(id);
     res.json({
         message: 'eliminar',
         product,

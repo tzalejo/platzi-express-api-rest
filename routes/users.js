@@ -1,16 +1,21 @@
 const express = require('express');
+const validatorHandler = require('../middleware/validator.handler');
+const { getUserDto } = require('../schemas/user.dto');
 //const faker = require('faker');
 const router = express.Router();
 
 const UsersService = require('./../services/user.service');
 const usersService = new UsersService();
 
-router.get('/', (req, res)=>{
-    const users = usersService.find();    
+router.get('/',
+  validatorHandler(getUserDto, 'params'),
+  async (req, res)=>{
+    const users = await usersService.find();
     res.json(users);
 });
 
-router.get('/:id',(req, res)=>{
+router.get('/:id',
+(req, res)=>{
     const { id } = req.params;
     const user = usersService.findOne(id);
     res.json(user);
