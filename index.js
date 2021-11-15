@@ -13,7 +13,7 @@ const port = 3005;
 // const whitelist = // son los mismos (si pego los links platzi me impide comentar)
 // const options = {
 //   origin: (origin, callback) => {
-//     if (whitelist.includes(origin)) {
+//     if (whitelist.includes(origin) || !origin) {
 //       callback(null, true);
 //     } else {
 //       callback(new Error('no permitido'), false);

@@ -8,14 +8,14 @@ const UsersService = require('./../services/user.service');
 const usersService = new UsersService();
 
 router.get('/',
-  validatorHandler(getUserDto, 'params'),
-  async (req, res)=>{
-    const users = await usersService.find();
-    res.json(users);
+async (req, res)=>{
+  const users = await usersService.find();
+  res.json(users);
 });
 
 router.get('/:id',
-(req, res)=>{
+  validatorHandler(getUserDto, 'params'),
+  (req, res)=>{
     const { id } = req.params;
     const user = usersService.findOne(id);
     res.json(user);
