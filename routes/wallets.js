@@ -1,24 +1,23 @@
 const express = require('express');
 const validatorHandler = require('../middleware/validator.handler');
-const { getUserDto, createUserDto } = require('../schemas/user.dto');
-//const faker = require('faker');
+const { getWalletDto, createWalletDto } = require('../schemas/wallet.dto');
 const router = express.Router();
 
-const UsersService = require('./../services/user.service');
-const usersService = new UsersService();
+const WalletService = require('./../services/wallet.service');
+const walletService = new WalletService();
 
 router.get('/', async (req, res) => {
-  const users = await usersService.find();
+  const users = await walletService.find();
   res.json(users);
 });
 
 router.get(
   '/:id',
-  validatorHandler(getUserDto, 'params'),
+  validatorHandler(getWalletDto, 'params'),
   async (req, res, next) => {
     try {
       const { id } = req.params;
-      const user = await usersService.findOne(id);
+      const user = await walletService.findOne(id);
       res.json(user);
     } catch (error) {
       next(error);
@@ -28,11 +27,11 @@ router.get(
 
 router.post(
   '/',
-  validatorHandler(createUserDto, 'body'),
+  validatorHandler(createWalletDto, 'body'),
   async (req, res, next) => {
     try {
-      const { email, name, password } = req.body;
-      const user = await usersService.create({ name, email, password });
+      const { name, loginname, password } = req.body;
+      const user = await walletService.create({ name, loginname, password });
       res.json(user);
     } catch (error) {
       next(error);

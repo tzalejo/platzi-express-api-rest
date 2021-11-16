@@ -1,16 +1,14 @@
-const Joi = require("joi")
+const Joi = require('joi');
 
-const id = Joi.string().uuid();
+const id = Joi.number();
 const name = Joi.string().min(3).max(10);
 const email = Joi.string().email();
-const limit = Joi.number();
-const offset = Joi.number();
+const password = Joi.string().min(3).max(10);
 
 const createUserDto = Joi.object({
   name: name.required(),
   email: email.required(),
-  limit: limit.required(),
-  offset: offset.required(),
+  password: password.required(),
 });
 
 const updateUserDto = Joi.object({
@@ -22,4 +20,4 @@ const getUserDto = Joi.object({
   id: id.required(),
 });
 
-module.exports = { createUserDto, updateUserDto, getUserDto};
+module.exports = { createUserDto, updateUserDto, getUserDto };
