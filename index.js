@@ -24,7 +24,7 @@ const port = process.env.PORT || 3005;
 // app.use(cors(options));
 app.use(cors());
 
-//respuesta en json
+//middleware de express que me permite recibir la información de POST en formato json
 app.use(express.json());
 
 // routas
