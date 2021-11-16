@@ -4,6 +4,7 @@ const {
   errorHandler,
   logErrors,
   boomErrorHandler,
+  ormErrorHandler,
 } = require('./middleware/error.handler');
 const cors = require('cors');
 const app = express();
@@ -32,6 +33,7 @@ routerApi(app);
 
 // middleware
 app.use(logErrors);
+app.use(ormErrorHandler);
 app.use(boomErrorHandler);
 app.use(errorHandler);
 

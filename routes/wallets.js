@@ -1,6 +1,10 @@
 const express = require('express');
 const validatorHandler = require('../middleware/validator.handler');
-const { getWalletDto, createWalletDto } = require('../schemas/wallet.dto');
+const {
+  getWalletDto,
+  createWalletDto,
+  updateWalletDto,
+} = require('../schemas/wallet.dto');
 const router = express.Router();
 
 const WalletService = require('./../services/wallet.service');
@@ -33,6 +37,35 @@ router.post(
       const { name, loginname, password } = req.body;
       const user = await walletService.create({ name, loginname, password });
       res.json(user);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.put(
+  '/:id',
+  validatorHandler(updateWalletDto, 'body'),
+  async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const { password, name } = req.body;
+      const user = await walletService.update(id, { name, password });
+      res.json(user);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.delete(
+  '/:id',
+  validatorHandler(getWalletDto, 'params'),
+  async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      await walletService.delete(id);
+      res.status(201).json({ id });
     } catch (error) {
       next(error);
     }

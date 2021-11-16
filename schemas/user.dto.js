@@ -13,7 +13,7 @@ const createUserDto = Joi.object({
 
 const updateUserDto = Joi.object({
   name: name,
-  email: email,
+  password: password,
 });
 
 const getUserDto = Joi.object({

@@ -19,5 +19,17 @@ class UsersService {
     }
     return user;
   }
+
+  async update(id, changes){
+    const user = await this.findOne(id);
+    const rta = await user.update(changes);
+    return rta;
+  }
+
+  async delete(id){
+    const user = await this.findOne(id);
+    await user.destroy();
+    return {id};
+  }
 }
 module.exports = UsersService;
