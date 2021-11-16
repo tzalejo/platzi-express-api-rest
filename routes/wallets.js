@@ -34,8 +34,8 @@ router.post(
   validatorHandler(createWalletDto, 'body'),
   async (req, res, next) => {
     try {
-      const { name, loginname, password } = req.body;
-      const user = await walletService.create({ name, loginname, password });
+      const body = req.body;
+      const user = await walletService.create(body);
       res.json(user);
     } catch (error) {
       next(error);
@@ -45,12 +45,13 @@ router.post(
 
 router.put(
   '/:id',
+  validatorHandler(getWalletDto, 'params'),
   validatorHandler(updateWalletDto, 'body'),
   async (req, res, next) => {
     try {
       const { id } = req.params;
-      const { password, name } = req.body;
-      const user = await walletService.update(id, { name, password });
+      const body = req.body;
+      const user = await walletService.update(id, body);
       res.json(user);
     } catch (error) {
       next(error);

@@ -1,55 +1,41 @@
-const boom = require('@hapi/boom');
+// const boom = require('@hapi/boom');
 const { models } = require('../libs/sequelize');
 
 class WalletService {
-
   async create(newWallet) {
-    const user = await models.Wallet.create(newWallet);
+    const user = await models.Wallet.create(newWallet, {
+      include: ['user'],
+    });
     return user;
   }
 
   async find() {
-    const product = await models.Wallet.findAll();
+    const product = await models.Wallet.findAll({
+      include: ['user'],
+    });
     return product;
   }
 
   async findOne(id) {
-    const product = await models.Wallet.findByPk(id);
-    if (!product) {
-      throw boom.notFound('Error de wallet not found');
+    const wallet = await models.Wallet.findByPk(id);
+    if (!wallet) {
+      // throw boom.notFound('Error de wallet not found');
+      return { message: 'No exite wallet' };
     }
-    if (product.isBlock) {
-      throw boom.conflict('product is block');
-    }
-    return product;
+    return wallet;
   }
 
-  // async delete(id) {
-  //   const index = this.products.findIndex((item) => item.id === id);
-  //   if (index === -1) {
-  //     // throw new Error('Product not found');
-  //     throw boom.notFound('Error de productos not found');
-  //   }
+  async delete(id) {
+    const wallet = await this.find(id);
+    await wallet.destroy();
+    return { message: 'Se elimino correctamente la wallet' };
+  }
 
-  //   this.products.splice(index, 1);
-  //   return { id };
-  // }
-
-  // async udpate(id, data) {
-  //   const index = this.products.findIndex((item) => item.id === id);
-
-  //   if (index === -1) {
-  //     // throw new Error('Product not found');
-  //     throw boom.notFound('Error de productos not found');
-  //   }
-
-  //   const product = this.products[index];
-  //   this.products[index] = {
-  //     ...product,
-  //     ...data,
-  //   };
-  //   return this.products[index];
-  // }
+  async udpate(id, data) {
+    const wallet = await this.find(id);
+    const rta = await wallet.udpate(data);
+    return rta;
+  }
 }
 
 module.exports = WalletService;
