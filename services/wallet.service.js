@@ -3,9 +3,7 @@ const { models } = require('../libs/sequelize');
 
 class WalletService {
   async create(newWallet) {
-    const wallet = await models.Wallet.create(newWallet, {
-      include: ['user'],
-    });
+    const wallet = await models.Wallet.create(newWallet);
     return wallet;
   }
 
@@ -19,13 +17,15 @@ class WalletService {
 
   async find() {
     const wallet = await models.Wallet.findAll({
-      include: ['user'],
+      include: ['user', 'type_wallet'],
     });
     return wallet;
   }
 
   async findOne(id) {
-    const wallet = await models.Wallet.findByPk(id);
+    const wallet = await models.Wallet.findByPk(id,{
+      include: ['user', 'type_wallet'],
+    });
     if (!wallet) {
       // throw boom.notFound('Error de wallet not found');
       return { message: 'No exite wallet' };

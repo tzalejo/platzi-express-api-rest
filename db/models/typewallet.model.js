@@ -22,8 +22,8 @@ const TypeWalletSchema = {
 class TypeWallet extends Model {
   static associate(models) {
     this.hasMany(models.Wallet, {
-      as: 'wallet',
-      foreignKey: 'userId',
+      as: 'wallets',
+      foreignKey: 'typeWalletId',
     });
   }
 

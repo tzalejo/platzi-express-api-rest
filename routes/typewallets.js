@@ -44,20 +44,6 @@ router.post(
   }
 );
 
-router.post(
-  '/user',
-  validatorHandler(createTypeWalletDto, 'body'),
-  async (req, res, next) => {
-    try {
-      const body = req.body;
-      const user = await typeWalletService.create(body);
-      res.json(user);
-    } catch (error) {
-      next(error);
-    }
-  }
-);
-
 router.put(
   '/:id',
   validatorHandler(getTypeWalletDto, 'params'),

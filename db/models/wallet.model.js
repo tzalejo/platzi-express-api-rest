@@ -1,5 +1,6 @@
 const { Model, DataTypes, Sequelize } = require('sequelize');
 const { USER_TABLE } = require('./user.model');
+const { TYPE_WALLET_TABLE } = require('./typewallet.model');
 // definir la tabla
 const WALLET_TABLE = 'wallets';
 
@@ -11,7 +12,6 @@ const WalletSchema = {
     primaryKey: true,
     type: DataTypes.INTEGER,
   },
-  name: { allowNull: false, type: DataTypes.STRING, unique: false },
   loginName: {
     allowNull: false,
     type: DataTypes.STRING,
@@ -40,11 +40,24 @@ const WalletSchema = {
     onUpdate: 'CASCADE',
     onDelete: 'SET NULL',
   },
+
+  typeWalletId: {
+    field: 'type_wallet_id',
+    allowNull: false,
+    type: DataTypes.INTEGER,
+    references: {
+      model: TYPE_WALLET_TABLE,
+      key: 'id',
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'SET NULL',
+  },
 };
 
 class Wallet extends Model {
   static associate(models) {
     this.belongsTo(models.User, { as: 'user' });
+    this.belongsTo(models.TypeWallet, { as: 'type_wallet' });
   }
 
   static config(sequelize) {
