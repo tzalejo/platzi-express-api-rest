@@ -10,6 +10,7 @@ const URI = `postgres://${USER}:${PASSWORD}@${config.dbHost}:${config.dbPort}/${
 const sequelize = new Sequelize(URI, {dialect:'postgres', logging: false}); // logging en la consola sale las consultas x orm
 
 setupModels(sequelize);
-sequelize.sync();
+
+sequelize.sync();// crea las tablas
 
 module.exports = sequelize;

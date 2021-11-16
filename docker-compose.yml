@@ -7,6 +7,7 @@ services:
       - POSTGRES_DB=nodee
       - POSTGRES_USER=alejandro
       - POSTGRES_PASSWORD=admin123
+    container_name: postgres13
     ports:
       - 54320:5432
     volumes:
@@ -18,3 +19,27 @@ services:
       - PGADMIN_DEFAULT_PASSWORD=root
     ports:
       - 5050:80
+    container_name: pgadmin
+
+  # mysql:
+  #   image: mysql:5
+  #   restart: always
+  #   environment:
+  #     - MYSQL_DATABASE=nodee
+  #     - MYSQL_ROOT_PASSWORD=admin123
+  #     - MYSQL_USER=root
+  #     - MYSQL_PASSWORD=admin132
+  #   container_name: mysql5
+  #   ports:
+  #     - 6060:3306
+  #   volumes:
+  #     - ./mysql_data:/var/lib/mysql
+
+  # phpmyadmin:
+  #   image: phpmyadmin/phpmyadmin
+  #   environment:
+  #     - MYSQL_ROOT_PASSWORD=admin123
+  #     - PMA_HOST=mysql
+  #   ports:
+  #     - 8083:80
+  #   container_name: phpmyadmin

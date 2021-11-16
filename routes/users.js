@@ -5,7 +5,6 @@ const {
   createUserDto,
   updateUserDto,
 } = require('../schemas/user.dto');
-//const faker = require('faker');
 const router = express.Router();
 
 const UsersService = require('./../services/user.service');
