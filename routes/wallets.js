@@ -4,6 +4,7 @@ const {
   getWalletDto,
   createWalletDto,
   updateWalletDto,
+  createWalletUserDto,
 } = require('../schemas/wallet.dto');
 const router = express.Router();
 
@@ -32,6 +33,20 @@ router.get(
 router.post(
   '/',
   validatorHandler(createWalletDto, 'body'),
+  async (req, res, next) => {
+    try {
+      const body = req.body;
+      const user = await walletService.create(body);
+      res.json(user);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.post(
+  '/user',
+  validatorHandler(createWalletUserDto, 'body'),
   async (req, res, next) => {
     try {
       const body = req.body;

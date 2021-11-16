@@ -6,11 +6,29 @@ const loginName = Joi.string().min(3).max(20);
 const password = Joi.string().min(3).max(10);
 const userId = Joi.number().integer();
 
+const firstName = Joi.string().min(3).max(10);
+const lastName = Joi.string().min(3).max(10);
+const email = Joi.string().email();
+const birthday = Joi.date();
+
 const createWalletDto = Joi.object({
   name: name.required(),
   loginName: loginName.required(),
   password: password.required(),
   userId: userId.required(),
+});
+
+const createWalletUserDto = Joi.object({
+  name: name.required(),
+  loginName: loginName.required(),
+  password: password.required(),
+  user: Joi.object({
+    firstName: firstName.required(),
+    lastName: lastName.required(),
+    email: email.required(),
+    birthday: birthday.required(),
+    password: password.required(),
+  }),
 });
 
 const updateWalletDto = Joi.object({
@@ -24,4 +42,4 @@ const getWalletDto = Joi.object({
   id: id.required(),
 });
 
-module.exports = { createWalletDto, updateWalletDto, getWalletDto };
+module.exports = { createWalletDto, updateWalletDto, getWalletDto, createWalletUserDto };

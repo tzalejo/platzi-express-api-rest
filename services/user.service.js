@@ -8,12 +8,16 @@ class UsersService {
   }
 
   async find() {
-    const users = await models.User.findAll();
+    const users = await models.User.findAll({
+      include: ['wallet']
+    });
     return users;
   }
 
   async findOne(id) {
-    const user = await models.User.findByPk(id);
+    const user = await models.User.findByPk(id, {
+      include: ['wallet']
+    });
     if (!user) {
       throw boom.notFound('Error de user not found');
     }

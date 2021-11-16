@@ -3,17 +3,25 @@ const { models } = require('../libs/sequelize');
 
 class WalletService {
   async create(newWallet) {
-    const user = await models.Wallet.create(newWallet, {
+    const wallet = await models.Wallet.create(newWallet, {
       include: ['user'],
     });
-    return user;
+    return wallet;
+  }
+
+  async createUser(data) {
+    // cramos la wallet pero  a su vez el user..
+    const wallet = await models.Wallet.create(data, {
+      include: ['user']
+    });
+    return wallet;
   }
 
   async find() {
-    const product = await models.Wallet.findAll({
+    const wallet = await models.Wallet.findAll({
       include: ['user'],
     });
-    return product;
+    return wallet;
   }
 
   async findOne(id) {
