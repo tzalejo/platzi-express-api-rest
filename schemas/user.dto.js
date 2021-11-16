@@ -1,19 +1,25 @@
 const Joi = require('joi');
 
 const id = Joi.number();
-const name = Joi.string().min(3).max(10);
+const firstName = Joi.string().min(3).max(10);
+const lastName = Joi.string().min(3).max(10);
 const email = Joi.string().email();
+const birthday = Joi.date();
 const password = Joi.string().min(3).max(10);
 
 const createUserDto = Joi.object({
-  name: name.required(),
+  firstName: firstName.required(),
+  lastName: lastName.required(),
   email: email.required(),
+  birthday: birthday.required(),
   password: password.required(),
 });
 
 const updateUserDto = Joi.object({
-  name: name,
+  firstName: firstName,
+  lastName: lastName,
   password: password,
+  birthday: birthday,
 });
 
 const getUserDto = Joi.object({

@@ -34,8 +34,14 @@ router.post(
   validatorHandler(createUserDto, 'body'),
   async (req, res, next) => {
     try {
-      const { email, name, password } = req.body;
-      const user = await usersService.create({ name, email, password });
+      const { email, firstName, lastName, password, birthday } = req.body;
+      const user = await usersService.create({
+        firstName,
+        lastName,
+        email,
+        password,
+        birthday,
+      });
       res.json(user);
     } catch (error) {
       next(error);
@@ -49,8 +55,13 @@ router.put(
   async (req, res, next) => {
     try {
       const { id } = req.params;
-      const { password, name } = req.body;
-      const user = await usersService.update(id, { name, password });
+      const { password, firstName, lastName, birthday } = req.body;
+      const user = await usersService.update(id, {
+        firstName,
+        lastName,
+        birthday,
+        password,
+      });
       res.json(user);
     } catch (error) {
       next(error);
