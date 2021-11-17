@@ -1,5 +1,5 @@
 'use strict';
-const { TypeWalletSchema, TYPE_WALLET_TABLE } = require('../models/typewallet.model');
+const { TypeWalletSchema, TYPE_WALLET_TABLE } = require('../models/type-wallet.model');
 module.exports = {
   up: async (queryInterface) => {
     await queryInterface.createTable(TYPE_WALLET_TABLE, TypeWalletSchema);

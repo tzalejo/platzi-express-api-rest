@@ -1,6 +1,6 @@
 const { Model, DataTypes, Sequelize } = require('sequelize');
 const { USER_TABLE } = require('./user.model');
-const { TYPE_WALLET_TABLE } = require('./typewallet.model');
+const { TYPE_WALLET_TABLE } = require('./type-wallet.model');
 // definir la tabla
 const WALLET_TABLE = 'wallets';
 

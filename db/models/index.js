@@ -1,6 +1,6 @@
 const { User, UserSchema} = require('./user.model');
 const { Wallet, WalletSchema} = require('./wallet.model');
-const { TypeWallet, TypeWalletSchema} = require('./typewallet.model');
+const { TypeWallet, TypeWalletSchema} = require('./type-wallet.model');
 
 function setupModels(sequelize){
   User.init(UserSchema, User.config(sequelize));

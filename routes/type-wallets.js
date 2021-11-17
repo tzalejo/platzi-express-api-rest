@@ -4,11 +4,11 @@ const {
   getTypeWalletDto,
   createTypeWalletDto,
   updateTypeWalletDto,
-} = require('../schemas/typewallet.dto');
+} = require('../schemas/type-wallet.dto');
 
 const router = express.Router();
 
-const TypeWalletService = require('../services/typewallet.service');
+const TypeWalletService = require('../services/type-wallet.service');
 const typeWalletService = new TypeWalletService();
 
 router.get('/', async (req, res) => {
