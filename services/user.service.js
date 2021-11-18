@@ -3,18 +3,21 @@ const { models } = require('./../libs/sequelize');
 class UsersService {
 
   async create(newUser) {
-    const user = await models.User.create(newUser);
-    return user;
+    return await models.User.create(newUser);
   }
 
   async find(query) {
     const options = {
       include: ['wallets'],
+      where: {},
     }
-    const {limit, offset} = query;
+    const {limit, offset, email} = query;
     if (limit && offset){
       options.limit = limit;
       options.offset = offset;
+    }
+    if (email){
+      options.where.email = email;
     }
     return  await models.User.findAll(options);
   }

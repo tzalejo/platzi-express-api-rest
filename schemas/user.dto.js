@@ -30,6 +30,7 @@ const getUserDto = Joi.object({
 
 const queryUserDto  = Joi.object({
   limit,
-  offset
+  offset,
+  email
 });
 module.exports = { createUserDto, updateUserDto, getUserDto, queryUserDto };
