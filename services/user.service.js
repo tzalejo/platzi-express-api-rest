@@ -7,11 +7,16 @@ class UsersService {
     return user;
   }
 
-  async find() {
-    const users = await models.User.findAll({
-      include: ['wallets']
-    });
-    return users;
+  async find(query) {
+    const options = {
+      include: ['wallets'],
+    }
+    const {limit, offset} = query;
+    if (limit && offset){
+      options.limit = limit;
+      options.offset = offset;
+    }
+    return  await models.User.findAll(options);
   }
 
   async findOne(id) {
