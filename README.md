@@ -7,4 +7,5 @@ https://www.toptal.com/developers/gitignore
 // comando utiles 
 git remote -v
 heroku pg:info
-heroku addons:docs heroku-postgresql 
+heroku addons:create heroku-postgresql:hobby-dev
+

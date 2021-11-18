@@ -8,8 +8,11 @@ const options = {
   logging: !config.isProd, // logging en la consola sale las consultas x orm
 }
 if (config.isProd) {
-    options.ssl = {
-      rejectUnauthorized: false
+    options.dialectOptions = {
+      ssl : {
+        rejectUnauthorized: false
+      }
+
     }
 }
 const sequelize = new Sequelize(config.dbURL, options);
