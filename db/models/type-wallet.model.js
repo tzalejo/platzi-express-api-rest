@@ -1,6 +1,6 @@
 const { Model, DataTypes, Sequelize } = require('sequelize');
 
-// definir la tabla
+// define la tabla
 const TYPE_WALLET_TABLE = 'type_wallets';
 
 const TypeWalletSchema = {

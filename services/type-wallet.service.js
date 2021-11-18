@@ -2,13 +2,11 @@ const { models } = require('../libs/sequelize');
 
 class TypeWalletService {
   async create(newTypeWallet) {
-    const typeWallet = await models.TypeWallet.create(newTypeWallet);
-    return typeWallet;
+    return await models.TypeWallet.create(newTypeWallet);
   }
 
   async find() {
-    const typeWallet = await models.TypeWallet.findAll();
-    return typeWallet;
+    return await models.TypeWallet.findAll();
   }
 
   async findOne(id) {
@@ -28,8 +26,7 @@ class TypeWalletService {
 
   async udpate(id, data) {
     const typeWallet = await this.find(id);
-    const rta = await typeWallet.udpate(data);
-    return rta;
+    return await typeWallet.udpate(data);
   }
 }
 

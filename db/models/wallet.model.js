@@ -1,10 +1,10 @@
 const { Model, DataTypes, Sequelize } = require('sequelize');
 const { USER_TABLE } = require('./user.model');
 const { TYPE_WALLET_TABLE } = require('./type-wallet.model');
-// definir la tabla
+// define la tabla
 const WALLET_TABLE = 'wallets';
 
-// defini la estructura de la bd
+// define la destructure de la bd
 const WalletSchema = {
   id: {
     allowNull: false,
