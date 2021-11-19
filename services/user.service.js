@@ -1,6 +1,7 @@
 const boom = require('@hapi/boom');
 const { models } = require('./../libs/sequelize');
 const bcrypt = require('bcrypt');
+const {where} = require("sequelize");
 class UsersService {
 
   async create(newUser) {
@@ -37,6 +38,12 @@ class UsersService {
       throw boom.notFound('Error de user not found');
     }
     return user;
+  }
+
+  async findEmail(email) {
+    return await models.User.findOne({
+      where: {email}
+    });
   }
 
   async update(id, changes){

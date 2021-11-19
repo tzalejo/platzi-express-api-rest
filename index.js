@@ -1,4 +1,5 @@
 const express = require('express');
+const passport = require('passport');
 const routerApi = require('./routes');
 const {
   errorHandler,
@@ -26,6 +27,9 @@ const port = process.env.PORT || 3005;
 
 // app.use(cors(options));
 app.use(cors());
+
+require('./utils/')
+app.use(passport.initialize());
 app.get('/',
   checkApiKey,
   (req, res) => {
