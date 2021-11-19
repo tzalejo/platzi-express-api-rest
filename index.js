@@ -6,6 +6,8 @@ const {
   boomErrorHandler,
   ormErrorHandler,
 } = require('./middleware/error.handler');
+const { checkApiKey } =require('./middleware/auth.handler');
+
 const cors = require('cors');
 const app = express();
 const port = process.env.PORT || 3005;
@@ -24,7 +26,11 @@ const port = process.env.PORT || 3005;
 
 // app.use(cors(options));
 app.use(cors());
-
+app.get('/',
+  checkApiKey,
+  (req, res) => {
+  res.send('Hola soy una nueva ruta!!');
+})
 //middleware de express que me permite recibir la información de POST en formato json
 app.use(express.json());
 

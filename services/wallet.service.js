@@ -1,6 +1,6 @@
 // const boom = require('@hapi/boom');
 const { models } = require('../libs/sequelize');
-
+const bcrypt = require('bcrypt');
 class WalletService {
   async create(newWallet) {
     const wallet = await models.Wallet.create(newWallet);
@@ -9,10 +9,17 @@ class WalletService {
 
   async createUser(data) {
     // cramos la wallet pero  a su vez el user..
-    const wallet = await models.Wallet.create(data, {
+    const hash = await bcrypt.hash(data.user.password, 10);
+    const newUser = {
+      ...data,
+      user:{
+        ...data.user,
+        password: hash
+      }
+    }
+    return models.Wallet.create(newUser, {
       include: ['user']
     });
-    return wallet;
   }
 
   async find() {
