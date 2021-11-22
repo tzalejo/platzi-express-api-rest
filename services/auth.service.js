@@ -40,12 +40,12 @@ class AuthService {
       throw boom.unauthorized();
     }
     const transporter = nodemailer.createTransport({
-      host: "smtp.gmail.com",
+      host: config.smtpHost,
       port: 465,
       secure: true, // true for 465, false for other ports
       auth: {
-        user: 'tzalejo@gmail.com', // generated ethereal user
-        pass: 'ebkzdepyfopgjpdu', // generated ethereal password
+        user: config.smtpEmail, // generated ethereal user
+        pass: config.smtpPass, // generated ethereal password
       },
     });
 
