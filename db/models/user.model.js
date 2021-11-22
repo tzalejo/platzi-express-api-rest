@@ -11,6 +11,7 @@ const UserSchema = {
   email: {allowNull: false, type: DataTypes.STRING, unique: true},
   birthday: {allowNull: false, type: DataTypes.DATE, unique: false},
   password: {allowNull: false, type: DataTypes.STRING},
+  recoveryToken: {allowNull: true, type: DataTypes.STRING, field: 'recovery_token'},
   // campo calculado
   edad: {
     type: DataTypes.VIRTUAL, get() {
