@@ -9,6 +9,7 @@ const {
 const router = express.Router();
 
 const WalletService = require('./../services/wallet.service');
+const passport = require("passport");
 const walletService = new WalletService();
 
 router.get('/', async (req, res) => {
@@ -32,6 +33,7 @@ router.get(
 
 router.post(
   '/',
+  passport.authenticate(`jwt`, {session: false}),
   validatorHandler(createWalletDto, 'body'),
   async (req, res, next) => {
     try {
@@ -46,6 +48,7 @@ router.post(
 
 router.post(
   '/user',
+  passport.authenticate(`jwt`, {session: false}),
   validatorHandler(createWalletUserDto, 'body'),
   async (req, res, next) => {
     try {
@@ -60,6 +63,7 @@ router.post(
 
 router.put(
   '/:id',
+  passport.authenticate(`jwt`, {session: false}),
   validatorHandler(getWalletDto, 'params'),
   validatorHandler(updateWalletDto, 'body'),
   async (req, res, next) => {
@@ -76,6 +80,7 @@ router.put(
 
 router.delete(
   '/:id',
+  passport.authenticate(`jwt`, {session: false}),
   validatorHandler(getWalletDto, 'params'),
   async (req, res, next) => {
     try {

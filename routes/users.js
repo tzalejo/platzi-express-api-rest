@@ -7,8 +7,9 @@ const {
   queryUserDto
 } = require('../schemas/user.dto');
 const router = express.Router();
-
+const passport = require('passport');
 const UsersService = require('./../services/user.service');
+// const {checkRole} = require("../middleware/auth.handler");
 const usersService = new UsersService();
 
 router.get('/',
@@ -34,6 +35,8 @@ router.get(
 
 router.post(
   '/',
+  // checkRole('admin', 'customer'),
+  passport.authenticate(`jwt`, {session: false}),
   validatorHandler(createUserDto, 'body'),
   async (req, res, next) => {
     try {
@@ -54,6 +57,7 @@ router.post(
 
 router.put(
   '/:id',
+  passport.authenticate(`jwt`, {session: false}),
   validatorHandler(updateUserDto, 'body'),
   async (req, res, next) => {
     try {
@@ -74,6 +78,7 @@ router.put(
 
 router.delete(
   '/:id',
+  passport.authenticate(`jwt`, {session: false}),
   validatorHandler(getUserDto, 'params'),
   async (req, res, next) => {
     try {

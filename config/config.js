@@ -11,5 +11,6 @@ const config ={
   dbDataBase: process.env.DB_DATABASE,
   dbURL: process.env.DATABASE_URL,
   apiKey: process.env.API_KEY,
+  jwtSecret: process.env.JWT_SECRET,
 }
 module.exports = {config};
