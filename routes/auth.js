@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
-const {config} = require('../config/config');
-const jwt = require('jsonwebtoken');
+const AuthService = require('./../services/auth.service');
+const authService = new AuthService();
 router.post(
   '/login',
   passport.authenticate('local', {session: false}),
@@ -10,16 +10,20 @@ router.post(
     try {
       // el passport devuelve el usuario si valida correctamente el correo
       const user = req.user;
-      const payload = {
-        sub: user.id,
-        firstName: user.firstName,
-        lastName: user.lastName,
-      }
-      const token = jwt.sign(payload, config.jwtSecret);
-      res.json({
-        user,
-        token
-      });
+      res.json(authService.signToken(user));
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.post(
+  '/recovery',
+  async (req, res, next) => {
+    try {
+      const {email} = req.body;
+      const rta = await authService.sendEamil(email);
+      res.json(rta);
     } catch (error) {
       next(error);
     }
