@@ -49,23 +49,38 @@ class AuthService {
     return {message: 'mail send'};
   }
 
-  async sendRecovery(email){
+  async sendRecovery(email) {
     const user = await serviceUser.findEmail(email);
     if (!user) {
       throw boom.unauthorized();
     }
     const payload = {sub: user.id};
-    const token = jwt.sing(payload, config.jwtSecret, {expiresIn: '15min'});
+    const token = jwt.sign(payload, config.jwtSecret, {expiresIn: '15min'});
     const link = `https://mi_url/recovety?token=${token}`;
-    await serviceUser.update(user.id, token); // guardo el token
+    await serviceUser.update(user.id, {recoveryToken: token}); // guardo el token
     const mail = {
       from: '"Fred Foo 👻" <tzalejo@gmail.com>', // sender address
       to: user.email, // sender list of receivers
       subject: "Email para recuperar contraseña ✔✔✔", // Subject line
       html: `<b>ingrese a este link => ${link}</b>`, // html body
     };
-    const rta = await  this.sendEamil(mail);
-    return rta;
+    return await this.sendEamil(mail);
+  }
+
+  async changePassword(token, password) {
+    try {
+      const payload = jwt.verify(token, config.jwtSecret);
+      const user = await serviceUser.findOne(payload.sub);
+
+      if (user.recoveryToken !== token) {
+        throw boom.unauthorized();
+      }
+      const hash = await bcrypt.hash(password, 10);
+      await serviceUser.update(user.id, {recoveryToken: null, password: hash});
+      return { message: 'password change'};
+    } catch (e) {
+      throw boom.unauthorized();
+    }
   }
 }
 

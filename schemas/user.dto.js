@@ -8,6 +8,7 @@ const birthday = Joi.date();
 const password = Joi.string().min(3).max(10);
 const limit = Joi.number();
 const offset = Joi.number();
+const token = Joi.string();
 
 const createUserDto = Joi.object({
   firstName: firstName.required(),
@@ -33,4 +34,9 @@ const queryUserDto  = Joi.object({
   offset,
   email
 });
-module.exports = { createUserDto, updateUserDto, getUserDto, queryUserDto };
+
+const queryUserToken = Joi.object({
+  token: token.required(),
+  password: password.required(),
+})
+module.exports = { createUserDto, updateUserDto, getUserDto, queryUserDto, queryUserToken };

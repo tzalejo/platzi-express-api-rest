@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 const AuthService = require('./../services/auth.service');
+const validatorHandler = require('../middleware/validator.handler');
+const {queryUserToken} = require('../schemas/user.dto');
+
 const authService = new AuthService();
 router.post(
   '/login',
@@ -22,7 +25,21 @@ router.post(
   async (req, res, next) => {
     try {
       const {email} = req.body;
-      const rta = await authService.sendEamil(email);
+      const rta = await authService.sendRecovery(email);
+      res.json(rta);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.post(
+  '/change-password',
+  // validatorHandler(queryUserToken, 'body'),
+  async (req, res, next) => {
+    try {
+      const {token, password} = req.body;
+      const rta = await authService.changePassword(token, password);
       res.json(rta);
     } catch (error) {
       next(error);
